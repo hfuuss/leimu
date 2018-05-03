@@ -2,6 +2,11 @@
   "name": "leimu",
   "version": "1.0.0",
   "description": "",
+  "dependencies": {
+    "commander": "2.9.0",
+    "mkdirp": "0.5.1",
+    "sorted-object": "2.0.0"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
