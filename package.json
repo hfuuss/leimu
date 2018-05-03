@@ -1,0 +1,27 @@
+{
+  "name": "leimu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "leimu": "bin/leimu"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hfuuss/leimu.git"
+  },
+  "keywords": [
+    "leimu",
+    "react",
+    "auto"
+  ],
+  "author": "hfuuss <ss@hfuusec.cn> (http://i.getshell.cn)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hfuuss/leimu/issues"
+  },
+  "homepage": "https://github.com/hfuuss/leimu#readme"
+}
