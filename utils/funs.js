@@ -5,6 +5,8 @@ var path = require('path');
 var readline = require('readline');
 var sortedObject = require('sorted-object');
 var util = require('util');
+
+var _exit = process.exit; //退出程序,_exit备份原生的process.exit，下面21行要重写process.exit
 /**
  * 
  * 
@@ -146,7 +148,25 @@ function launchedFromCmd() {
  * @param {String} path
  */
 
-function createApplication(app_name, path,program) {
+function createApplication(app_name, path,program,type,subCommand) {
+  switch (type){
+    case "react":
+    createSimpleReact(app_name, path,program,subCommand);
+    break;
+    case "vue":
+    createSimpleVue(app_name, path,program,subCommand);
+    break;
+
+    default:
+    createSimpleReact(app_name, path,program,subCommand);
+  }
+
+  
+  
+}
+// 还木有处理subCommand
+function createSimpleReact(app_name, path, subCommand){
+  
   var wait = 3; //调用几次mkdir的回调，就执行几次
 
   console.log();
@@ -209,6 +229,10 @@ function createApplication(app_name, path,program) {
   });
 }
 
+
+function createSimpleVue(app_name, path, subCommand){
+  console.log('我是vue，还木有开发呢...',app_name,path);
+}
 module.exports = {
   copy_template,
   createAppName,

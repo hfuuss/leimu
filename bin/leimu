@@ -63,13 +63,37 @@ before(program, 'unknownOption', function () {//绑定 program.unknownOption
     program.outputHelp()
   }
 })
+
+var commandType = 'react';//默认类型值为react
+var subCommand = null;//子命令默认值为null
+
 //命令行菜单
 program
-  .version(version, '    --version')
+  .version(version, '    --version','输出帮助信息')
   .usage('[options] [dir]')
-  .option('    --git', 'add .gitignore')
-  .option('-f, --force', 'force on non-empty directory')
-  .parse(process.argv);
+  .option('-f, --force', '强行在非空目录下面建立app')
+  .action(function (dir, cmd) {
+    commandType = 'react';
+  })
+// react
+program
+  .command('react [dir]')
+  .option('-s, --simple', '建立简单的react模板')
+  .option('-r, --redux', '建立结合redux的react模板')
+  .action(function (dir, cmd) {
+    commandType = 'react';
+    subCommand = cmd;
+  })
+  
+  program
+  .command('vue [dir]')
+  .option('-s, --simple', '建立简单的vue模板')
+  .option('-r, --redux', '建立结合vuex的vue模板')
+  .action(function (dir, cmd) {
+    commandType = 'vue';
+    subCommand = cmd;
+  })
+program.parse(process.argv);
 
 if (!exit.exited) { //退出，貌似是由于win下面的一个bug，之后再看issue
   main(); //开始执行
@@ -89,12 +113,12 @@ function main() {
   // Generate application 创建应用
   emptyDirectory(destinationPath, function (empty) {
     if (empty || program.force) { //如果目录为空，或者强行在非空目录下建立app，居然要考虑这么多场景，还真是经验。
-      createApplication(appName, destinationPath,program);
+      createApplication(appName, destinationPath,program,commandType,subCommand);
     } else {
       confirm('destination is not empty, continue? [y/N] ', function (ok) {
         if (ok) {
           process.stdin.destroy();
-          createApplication(appName, destinationPath,program);
+          createApplication(appName, destinationPath,program,commandType,subCommand);
         } else {//退出
           console.error('aborting');
           exit(1);
